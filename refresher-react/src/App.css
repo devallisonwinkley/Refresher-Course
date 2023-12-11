@@ -1,0 +1,9 @@
+.form {
+  margin-bottom: 5px;
+}
+
+.post {
+  margin-bottom: 1rem;
+  border: 1px solid slategrey;
+  border-radius: 10px;
+}
