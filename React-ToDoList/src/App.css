@@ -9,7 +9,9 @@
 h1 {
   color: gold;
   text-align: center;
+  font-weight: bold;
 }
+
 #todo-list {
   width: 450px;
   margin: 60px auto;
@@ -20,6 +22,24 @@ form,
   border: 1px solid transparent;
   padding: 10px 20px;
   margin-bottom: 10px;
+}
+
+#status {
+  font-size: 16px;
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+#option-status {
+  font-size: 16px;
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 form {

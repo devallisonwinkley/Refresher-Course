@@ -115,23 +115,24 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = React.useState([]);
-  const [todo, setTodo] = React.useState("");
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
+  const [stats, setStats] = useState("");
 
-  useEffect(() => {
-    const json = localStorage.getItem("todos");
-    const loadedTodos = JSON.parse(json);
-    if (loadedTodos) {
-      setTodos(loadedTodos);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const json = localStorage.getItem("todos");
+  //   const loadedTodos = JSON.parse(json);
+  //   if (loadedTodos) {
+  //     setTodos(loadedTodos);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const json = JSON.stringify(todos);
-    localStorage.setItem("todos", json);
-  }, [todos]);
+  // useEffect(() => {
+  //   const json = JSON.stringify(todos);
+  //   localStorage.setItem("todos", json);
+  // }, [todos]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -139,10 +140,15 @@ function App() {
     const newTodo = {
       id: new Date().getTime(),
       text: todo,
-      completed: false,
+      status: stats,
+      // completed: false,
     };
     setTodos([...todos].concat(newTodo));
     setTodo("");
+  }
+
+  function selectedStatus(e) {
+    setStats(e.target.value);
   }
 
   function deleteTodo(id) {
@@ -150,15 +156,15 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  function toggleComplete(id) {
-    let updatedTodos = [...todos].map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-  }
+  // function toggleComplete(id) {
+  //   let updatedTodos = [...todos].map((todo) => {
+  //     if (todo.id === id) {
+  //       todo.completed = !todo.completed;
+  //     }
+  //     return todo;
+  //   });
+  //   setTodos(updatedTodos);
+  // }
 
   function submitEdits(id) {
     const updatedTodos = [...todos].map((todo) => {
@@ -173,24 +179,35 @@ function App() {
 
   return (
     <div id="todo-list">
-      <h1>To-Do List</h1>
+      <h1>TO-DO LIST</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
         />
-        <button type="submit">Add Todo</button>
+        <select onChange={selectedStatus} id="status">
+          <option value="Not Started" id="option-status">
+            Not Started
+          </option>
+          <option value="Ongoing" id="option-status">
+            Ongoing
+          </option>
+          <option value="Complete" id="option-status">
+            Complete
+          </option>
+        </select>
+        <button type="submit">ADD</button>
       </form>
       {todos.map((todo) => (
         <div key={todo.id} className="todo">
           <div className="todo-text">
-            <input
+            {/* <input
               type="checkbox"
               id="completed"
               checked={todo.completed}
               onChange={() => toggleComplete(todo.id)}
-            />
+            /> */}
             {todo.id === todoEditing ? (
               <input
                 type="text"
@@ -202,14 +219,12 @@ function App() {
           </div>
           <div className="todo-actions">
             {todo.id === todoEditing ? (
-              <button onClick={() => submitEdits(todo.id)}>
-                Submit Changes
-              </button>
+              <button onClick={() => submitEdits(todo.id)}>SAVE CHANGES</button>
             ) : (
-              <button onClick={() => setTodoEditing(todo.id)}>Update</button>
+              <button onClick={() => setTodoEditing(todo.id)}>UPDATE</button>
             )}
 
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button onClick={() => deleteTodo(todo.id)}>DELETE</button>
           </div>
         </div>
       ))}
