@@ -185,6 +185,7 @@ function App() {
           type="text"
           onChange={(e) => setTodo(e.target.value)}
           value={todo}
+          required
         />
         <select onChange={selectedStatus} id="status">
           <option value="Not Started" id="option-status">
@@ -212,6 +213,7 @@ function App() {
               <input
                 type="text"
                 onChange={(e) => setEditingText(e.target.value)}
+                required
               />
             ) : (
               <div>{todo.text}</div>
